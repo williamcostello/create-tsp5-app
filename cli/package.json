@@ -1,6 +1,6 @@
 {
   "name": "create-tsp5-app",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Create a p5 application with typescript, complete with a vite dev server.",
   "bin": {
     "create-p5-ts-app": "./index.cjs"
@@ -8,6 +8,7 @@
   "author": "William Costello",
   "license": "MIT",
   "dependencies": {
+    "chalk": "4.1.2",
     "inquirer": "^10.1.8"
   },
   "repository": {
