@@ -1,17 +1,33 @@
 #!/usr/bin/env node
 
 const { execSync } = require('child_process')
-const { input, confirm } = require('@inquirer/prompts')
+const { input, confirm, select } = require('@inquirer/prompts')
 const fs = require('fs')
 const path = require('path')
-
-const templateDir = path.resolve(__dirname, 'template')
 
 const main = async () => {
     const answers = {
         projectName: await input({
             message: 'Enter the project name:',
             default: 'p5-ts-starter',
+        }),
+        mode: await select({
+            message: 'Select the mode:',
+            choices: [
+                {
+                    title: 'Global',
+                    value: 'global',
+                    description:
+                        'Uses the same syntax as the p5 web editor. Great for prototyping. HMR is disabled for this mode',
+                },
+                {
+                    title: 'Instanced',
+                    value: 'instanced',
+                    description:
+                        'Use this if the sketch will not be used in isolation.',
+                },
+            ],
+            default: 'global',
         }),
         gitInit: await confirm({
             message: 'Initialize a git repository?',
@@ -45,6 +61,8 @@ const main = async () => {
         process.exit(1)
     }
 
+    const templateDir = path.join(__dirname, 'template', answers.mode)
+
     try {
         fs.cpSync(templateDir, projectPath, {
             overwrite: false,
@@ -77,6 +95,14 @@ const main = async () => {
                 'Failed to initialize a git repository:',
                 error.message
             )
+            cleanup()
+            process.exit(1)
+        }
+    } else {
+        try {
+            fs.rmSync(path.join(projectPath, '.gitignore'))
+        } catch (error) {
+            console.error('Failed to remove .gitignore:', error.message)
             cleanup()
             process.exit(1)
         }
