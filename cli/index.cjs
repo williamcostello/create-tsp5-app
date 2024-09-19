@@ -2,6 +2,7 @@
 
 const { execSync } = require('child_process')
 const { input, confirm, select } = require('@inquirer/prompts')
+const chalk = require('chalk')
 const fs = require('fs')
 const path = require('path')
 
@@ -9,7 +10,7 @@ const main = async () => {
     const answers = {
         projectName: await input({
             message: 'Enter the project name:',
-            default: 'p5-ts-starter',
+            default: 'p5-ts-startser',
         }),
         mode: await select({
             message: 'Select the mode:',
@@ -108,12 +109,17 @@ const main = async () => {
         }
     }
 
-    console.info(`Project ${answers.projectName} is ready!`)
     console.info(
-        `run 'cd ${answers.projectName}' to enter the project directory
-run 'npm install' to install dependencies
-run 'npm run dev' to start the development server`
+        chalk.greenBright(
+            'Project',
+            chalk.bold(`"${answers.projectName}"`),
+            'is ready!'
+        )
     )
+    console.info(chalk.bold(chalk.blueBright(`Next steps:`)))
+    console.info(chalk.yellowBright(`cd "${answers.projectName}"`))
+    console.info(chalk.yellowBright(`yarn install`))
+    console.info(chalk.yellowBright(`yarn dev`))
 }
 
 main()
