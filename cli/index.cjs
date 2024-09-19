@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 const { execSync } = require('child_process')
-const { input, confirm } = require('@inquirer/prompts')
+const { input, confirm, select } = require('@inquirer/prompts')
 const fs = require('fs')
 const path = require('path')
 
@@ -12,6 +12,24 @@ const main = async () => {
         projectName: await input({
             message: 'Enter the project name:',
             default: 'p5-ts-starter',
+        }),
+        mode: await select({
+            message: 'Select the mode:',
+            choices: [
+                {
+                    title: 'Global',
+                    value: 'global',
+                    description:
+                        'Uses the same syntax as the p5 web editor. Great for prototyping. HMR is disabled for this mode',
+                },
+                {
+                    title: 'Instanced',
+                    value: 'instanced',
+                    description:
+                        'Use this if the sketch will not be used in isolation.',
+                },
+            ],
+            default: 'global',
         }),
         gitInit: await confirm({
             message: 'Initialize a git repository?',
