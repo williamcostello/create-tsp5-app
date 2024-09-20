@@ -10,7 +10,7 @@ const main = async () => {
     const answers = {
         projectName: await input({
             message: 'Enter the project name:',
-            default: 'p5-ts-startser',
+            default: 'new-sketch',
         }),
         mode: await select({
             message: 'Select the mode:',
