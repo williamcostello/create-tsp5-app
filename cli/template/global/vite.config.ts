@@ -14,6 +14,9 @@ export default defineConfig({
             fileName: 'sketch',
         },
         minify: false,
+        rollupOptions: {
+            treeshake: false,
+        },
     },
     resolve: {
         alias: {
