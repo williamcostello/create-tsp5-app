@@ -1,6 +1,6 @@
 {
   "name": "create-tsp5-app",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "Create a p5 application with typescript, complete with a vite dev server.",
   "bin": {
     "create-p5-ts-app": "./index.cjs"
